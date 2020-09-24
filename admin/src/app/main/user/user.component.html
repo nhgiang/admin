@@ -1,0 +1,49 @@
+<div class="list-user-container">
+  <h5 class="title mb-4">Danh sách người dùng</h5>
+  <div class="d-flex justify-content-between mb-2">
+    <div class="search d-flex">
+      <input type="text" class="form-control search mr-3" placeholder="Nhập vào tên người dùng">
+      <button class="btn btn-primary btn-search d-flex align-items-center">
+        <i nz-icon nzType="search" nzTheme="outline"></i>
+      </button>
+    </div>
+    <div class="add">
+      <button class="btn btn-primary" (click)="addUser()">Thêm mới</button>
+    </div>
+  </div>
+  <nz-table #basicTable [nzData]="[1,2,3,4]">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Tên</th>
+        <th>Tuổi</th>
+        <th>Giới tính</th>
+        <th>Số điện thoại</th>
+        <th>Địa chỉ</th>
+        <th>Trạng thái</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{item}}</td>
+        <td>Nguyễn văn a</td>
+        <td>18</td>
+        <td>Nam</td>
+        <td>0123456789</td>
+        <td>Hà Nội</td>
+        <td><nz-switch [ngModel]="item % 2 === 1"></nz-switch></td>
+        <td>
+          <div class="actions">
+            <a class="common-action mr-3" (click)="edit()">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </a>
+            <a class="common-action">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

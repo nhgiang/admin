@@ -1,0 +1,123 @@
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+@mixin button-variant-primary($background, $border, $hover-background: darken($background, 7.5%), $hover-border: darken($border, 10%), $active-background: darken($background, 10%), $active-border: darken($border, 12.5%)) {
+  color: color-yiq($background);
+  @include gradient-bg(color(primary));
+  border-color: color(primary);
+  @include box-shadow($btn-box-shadow);
+
+  @include hover() {
+    color: color-yiq($hover-background);
+    @include gradient-bg(color(darken-primary-10));
+    border-color: color(darken-primary-10);
+  }
+
+  &:focus,
+  &.focus {
+    color: color-yiq($hover-background);
+    @include gradient-bg(color(primary));
+    border-color: color(primary);
+    box-shadow: 0 0 0 $btn-focus-width rgb(74 144 226 / 0.2);
+      // @if $enable-shadows {
+      //   // @include box-shadow($btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), .5));
+      //   box-shadow: 0 0 0 $btn-focus-width color(primary);
+      // } @else {
+      //   // Avoid using mixin so we can pass custom focus shadow properly
+      //   box-shadow: 0 0 0 $btn-focus-width color(opacity-primary-10);
+      // }
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    color: color-yiq($background);
+    background-color: color(primary);
+    border-color: color(primary);
+    // Remove CSS gradients if they're enabled
+    @if $enable-gradients {
+      background-image: none;
+    }
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle {
+    color: color-yiq($active-background);
+    background-color: color(darken-primary-20);
+    @if $enable-gradients {
+      background-image: none; // Remove the gradient for the pressed/active state
+    }
+    border-color: color(darken-primary-20);
+
+    &:focus {
+      box-shadow: 0 0 0 $btn-focus-width rgb(74 144 226 / 0.2);
+      // @if $enable-shadows and $btn-active-box-shadow != none {
+      //   @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), .5));
+      // } @else {
+      //   // Avoid using mixin so we can pass custom focus shadow properly
+      //   box-shadow: 0 0 0 $btn-focus-width color(opacity-primary-10);
+      // }
+    }
+  }
+}
+
+@mixin button-outline-variant-primary($color, $color-hover: color-yiq($color), $active-background: $color, $active-border: $color) {
+  color: color(primary);
+  border-color: color(primary);
+
+  @include hover() {
+    color: $color-hover;
+    background-color: color(primary);
+    border-color: color(primary);
+  }
+
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $color;
+    background-color: transparent;
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle {
+    color: color-yiq($active-background);
+    background-color: color(darken-primary-20);
+    border-color: color(darken-primary-20);
+
+    &:focus {
+      box-shadow: 0 0 0 $btn-focus-width rgb(74 144 226 / 0.2);
+      // @if $enable-shadows and $btn-active-box-shadow != none {
+      //   @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($color, .5));
+      // } @else {
+      //   // Avoid using mixin so we can pass custom focus shadow properly
+      //   box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+      // }
+    }
+  }
+}
+
+// stylelint-disable declaration-no-important
+
+// Typography
+
+@mixin text-emphasis-variant-primary($parent, $color, $ignore-warning: false) {
+  #{$parent} {
+    color: color(primary) !important;
+  }
+  @if $emphasized-link-hover-darken-percentage != 0 {
+    a#{$parent} {
+      @include hover-focus() {
+        color: darken($color, $emphasized-link-hover-darken-percentage) !important;
+      }
+    }
+  }
+  @include deprecate("`text-emphasis-variant()`", "v4.4.0", "v5", $ignore-warning);
+}

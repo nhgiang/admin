@@ -1,0 +1,41 @@
+<div class="list-user-container">
+  <h5 class="title mb-4">Danh sách phòng ban</h5>
+  <div class="d-flex justify-content-between mb-2">
+    <div class="search d-flex">
+      <input type="text" class="form-control search mr-3" placeholder="Nhập vào tên phòng ban">
+      <button class="btn btn-primary btn-search d-flex align-items-center">
+        <i nz-icon nzType="search" nzTheme="outline"></i>
+      </button>
+    </div>
+    <div class="add">
+      <button class="btn btn-primary" (click)="add()">Thêm mới</button>
+    </div>
+  </div>
+  <nz-table #basicTable [nzData]="[1,2,3,4,5,6,7,8,9,10,11]" [nzPageSize]="10">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Tên</th>
+        <th>Trạng thái</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{item}}</td>
+        <td>Phòng ban 1</td>
+        <td><nz-switch [ngModel]="item % 2 === 0"></nz-switch></td>
+        <td>
+          <div class="actions">
+            <a class="common-action mr-3" (click)="edit()">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </a>
+            <a class="common-action">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>

@@ -1,0 +1,20 @@
+<ng-content></ng-content>
+<ng-template #template>
+  <div class="modal-body">
+    <div class="d-flex align-items-center flex-column">
+      <div class="icon">
+        <ng-container [ngSwitch]="type">
+          <img *ngSwitchCase="'info'" src="/assets/images/confirm-icon.png"/>
+          <img *ngSwitchCase="'warning'" src="/assets/images/confirm-icon.png"/>
+          <img *ngSwitchDefault src="/assets/images/confirm-icon.png"/>
+        </ng-container>
+      </div>
+      <h5 class="modal-title">Confirmation</h5>
+      <div class="text text-muted" [innerHTML]="confirmation"></div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-clear" (click)="hide()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="confirm()">{{  confirmLabel || 'Save'  }}</button>
+  </div>
+</ng-template>
