@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.ts",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -27,6 +27,7 @@
     "lodash": "^4.17.20",
     "ng-zorro-antd": "^9.3.0",
     "ng2-izitoast": "^2.0.0",
+    "path": "^0.12.7",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "uuid": "^8.3.0",
