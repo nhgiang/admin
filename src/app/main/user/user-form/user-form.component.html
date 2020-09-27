@@ -1,18 +1,24 @@
 <div>
   <form [formGroup]="form">
-    <div class="form-group d-flex align-items-center">
-      <label class="form-control-label">First name</label>
+    <div class="form-group d-flex align-items-center" [class.has-danger]="isValid('username')">
+      <label class="form-control-label">Họ</label>
       <div class="w-100">
         <input type="text" class="form-control" formControlName="firstName" placeholder="Nhập vào first name">
+        <div class="errMsg" *ngIf="isValid('firstName')">
+          <span class="invalid-feedback">Không được để trống họ</span>
+        </div>
       </div>
     </div>
-    <div class="form-group d-flex align-items-center">
+    <div class="form-group d-flex align-items-center" [class.has-danger]="isValid('username')">
       <label class="form-control-label">Last name</label>
       <div class="w-100">
-        <input type="text" class="form-control" formControlName="firstName" placeholder="Nhập vào last name">
+        <input type="text" class="form-control" formControlName="lastName" placeholder="Nhập vào last name">
+        <div class="errMsg" *ngIf="isValid('lastName')">
+          <span class="invalid-feedback">Không được để trống tên</span>
+        </div>
       </div>
     </div>
-    <div class="form-group d-flex align-items-center">
+    <div class="form-group d-flex align-items-center" [class.has-danger]="isValid('username')">
       <label class="form-control-label">Giới tính</label>
       <div class="w-100">
         <select class="form-control" formControlName="gender">
@@ -20,44 +26,53 @@
           <option value="male">Nam</option>
           <option value="female">Nữ</option>
         </select>
+        <div class="errMsg" *ngIf="isValid('gender')">
+          <span class="invalid-feedback">Không được để trống giới tính</span>
+        </div>
       </div>
     </div>
-    <div class="form-group d-flex align-items-center">
+    <div class="form-group d-flex align-items-center" [class.has-danger]="isValid('username')">
       <label class="form-control-label">User Name</label>
       <div class="w-100">
-        <input type="text" class="form-control" formControlName="userName" placeholder="Nhập vào tên người dùng">
-        <div class="errMsg">
-          <span class="invalid-feedback">ádads</span>
+        <input type="text" class="form-control" formControlName="username" placeholder="Nhập vào tên người dùng">
+        <div class="errMsg" *ngIf="isValid('username')">
+          <span class="invalid-feedback">Không được để trống username</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group d-flex align-items-center" [class.has-danger]="isValid('username')">
+      <label class="form-control-label">Mật khẩu</label>
+      <div class="w-100">
+        <input type="password" class="form-control" formControlName="password" placeholder="Nhập vào mật khẩu">
+        <div class="errMsg" *ngIf="isValid('password')">
+          <span class="invalid-feedback">Không được để trống mật khẩu</span>
         </div>
       </div>
     </div>
     <div class="form-group d-flex align-items-center">
-      <label class="form-control-label">Mật khẩu</label>
+      <label class="form-control-label">Số điện thoại</label>
       <div class="w-100">
-        <input type="password" class="form-control" formControlName="password" placeholder="Nhập vào mật khẩu">
-      </div>
-    </div>
-    <div class="form-group d-flex align-items-center">
-      <label class="form-control-label">Só điện thoại</label>
-      <div class="w-100">
-        <input type="text" class="form-control" formControlName="phone" placeholder="Nhập vào mật khẩu">
+        <input type="text" class="form-control" formControlName="phone" placeholder="Nhập vào số điện thoại">
       </div>
     </div>
     <div class="form-group d-flex align-items-center">
       <label class="form-control-label">Ngày sinh</label>
       <div class="w-100">
-        <nz-date-picker formControlName="birthday" class="form-control" (ngModelChange)="onChange($event)"></nz-date-picker>
+        <nz-date-picker formControlName="birthDay" class="form-control"></nz-date-picker>
       </div>
     </div>
-    <div class="form-group d-flex">
-      <label class="form-control-label align-sefl-start">Địa chỉ</label>
+    <div class="form-group d-flex align-items-center">
+      <label class="form-control-label">Giới tính</label>
       <div class="w-100">
-        <textarea type="text" class="form-control" formControlName="address" placeholder="Nhập vào địa chỉ"></textarea>
+        <select class="form-control" formControlName="department">
+          <option value="" hidden>-Chọn phòng ban-</option>
+          <option [value]="item?.id" *ngFor="let item of departments">{{item?.name}}</option>
+        </select>
       </div>
     </div>
   </form>
 </div>
 <div *nzModalFooter>
-  <button class="btn btn-light" (click)="destroyModal()">Hủy bỏ</button>
-  <button class="btn btn-primary" (click)="submit()">Lưu lại</button>
+  <button nz-button nzType="default" (click)="destroyModal()">Hủy bỏ</button>
+  <button nzType="primary" (click)="submit()" nz-button [nzLoading]="activity.is('submitting')">Lưu lại</button>
 </div>

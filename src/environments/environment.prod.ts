@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000',
+  apiUrl: 'https://g4-assignment.herokuapp.com',
   localStorageKey: 'data'
 }

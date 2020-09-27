@@ -10,7 +10,7 @@ import { storageUtils } from 'src/utils/storage'
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private user$ = new BehaviorSubject<User>(null)
+  private user$ = new BehaviorSubject<any>(null)
 
   constructor(private http: HttpClient) {
   }
@@ -44,7 +44,7 @@ export class AuthenticationService {
       )
   }
 
-  getCurrentUser(): Observable<User> {
+  getCurrentUser(): Observable<any> {
     return this.user$.pipe(
       switchMap(user => {
         // check if we already have user data
@@ -62,7 +62,7 @@ export class AuthenticationService {
   }
 
   fetchCurrentUser(): Observable<User> {
-    return this.http.get<User>(`${environment.apiUrl}/current-user`)
+    return this.http.get<any>(`${environment.apiUrl}/current-user`)
       .pipe(
         tap(user => {
           this.user$.next(user);

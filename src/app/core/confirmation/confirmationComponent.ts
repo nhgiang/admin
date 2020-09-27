@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, HostListener, ViewChild, ElementRef } from '@angular/core'
+import { Component, Input, EventEmitter, HostListener, ViewChild, ElementRef, TemplateRef } from '@angular/core'
 import { Output } from '@angular/core'
 import { NzModalRef, NzModalService } from 'ng-zorro-antd'
 
@@ -21,7 +21,7 @@ export class ConfirmationComponent {
   @Input() time: number
   @Output() confirmed = new EventEmitter()
   @Output() dismissed = new EventEmitter()
-  @ViewChild('template', { static: true }) template: ElementRef
+  @ViewChild('template') template: TemplateRef<void>
 
   type: 'info' | 'warning' | 'danger' = 'danger'
   modalRef: NzModalRef
@@ -60,14 +60,12 @@ export class ConfirmationComponent {
       title: this.title,
       text: this.confirmation,
     }
-    // this.modalRef = this.modalService.create({
-    //   nzContent
-    // })
-       // this.template,
-    //   {
-    //   initialState,
-    //   class: this.getSizeClassName(),
-    // }
+    this.modalRef = this.modalService.create({
+      nzContent: this.template,
+      nzComponentParams: initialState,
+      nzClassName: this.getSizeClassName(),
+      nzFooter: null
+    })
     if (this.time > 0) {
       setTimeout(() => {
         this.hide()

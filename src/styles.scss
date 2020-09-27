@@ -82,3 +82,17 @@
 .form-control-label {
   min-width: 100px;
 }
+.has-danger {
+  .invalid-feedback {
+    display: block;
+  }
+  input,
+  select {
+    border-color: #dc3545;
+  }
+}
+.btn {
+  height: 38px;
+  padding: 0 1.5rem;
+  height: 38px;
+}

@@ -3,5 +3,5 @@ import { environment } from 'src/environments/environment'
 
 export const baseUrl = new InjectionToken<string>('baseUrl', {
   providedIn: 'root',
-  factory: () => environment.apiHostUrl
+  factory: () => environment.apiUrl
 })

@@ -2,8 +2,8 @@
   <h5 class="title mb-4">Danh sách người dùng</h5>
   <div class="d-flex justify-content-between mb-2">
     <div class="search d-flex">
-      <input type="text" class="form-control search mr-3" placeholder="Nhập vào tên người dùng">
-      <button class="btn btn-primary btn-search d-flex align-items-center">
+      <input type="text" class="form-control search mr-3" [(ngModel)]="keyword" placeholder="Nhập vào tên người dùng">
+      <button class="btn btn-primary btn-search d-flex align-items-center" (click)="search()">
         <i nz-icon nzType="search" nzTheme="outline"></i>
       </button>
     </div>
@@ -11,34 +11,38 @@
       <button class="btn btn-primary" (click)="addUser()">Thêm mới</button>
     </div>
   </div>
-  <nz-table #basicTable [nzData]="[1,2,3,4]">
+  <nz-table #basicTable [nzData]="users">
     <thead>
       <tr>
-        <th></th>
+        <th>STT</th>
         <th>Tên</th>
-        <th>Tuổi</th>
+        <th>Ngày sinh</th>
         <th>Giới tính</th>
+        <th>user name</th>
+        <th>Phòng ban</th>
         <th>Số điện thoại</th>
-        <th>Địa chỉ</th>
         <th>Trạng thái</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of basicTable.data">
-        <td>{{item}}</td>
-        <td>Nguyễn văn a</td>
-        <td>18</td>
-        <td>Nam</td>
-        <td>0123456789</td>
-        <td>Hà Nội</td>
-        <td><nz-switch [ngModel]="item % 2 === 1"></nz-switch></td>
+      <tr *ngFor="let item of basicTable.data;let index = index">
+        <th>{{index+1}}</th>
+        <td>{{item?.firstName}} {{item?.lastName}}</td>
+        <td>{{item?.birthDay| date: "dd/MM/yyyy"}}</td>
+        <td>{{item?.gender === 'male' ? 'nam' : 'nữ'}}</td>
+        <td>{{item?.username}}</td>
+        <td>{{item.department}}</td>
+        <td>{{item?.phone}}</td>
+        <td>
+          <nz-switch [ngModel]="item.status === 'active'" (ngModelChange)="updateStatus($event,item)"></nz-switch>
+        </td>
         <td>
           <div class="actions">
-            <a class="common-action mr-3" (click)="edit()">
+            <a class="common-action mr-3" (click)="edit(item?.id)">
               <i nz-icon nzType="edit" nzTheme="outline"></i>
             </a>
-            <a class="common-action">
+            <a class="common-action" [confirmation]="'Bạn có chắc muốn xóa người dùng này chứ'" (confirmed)="delete(item?.id)">
               <i nz-icon nzType="delete" nzTheme="outline"></i>
             </a>
           </div>
