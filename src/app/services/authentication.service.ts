@@ -5,28 +5,39 @@ import { map, switchMap, tap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment'
 import { User } from 'src/types/model'
 import { storageUtils } from 'src/utils/storage'
+import { AuthApiService } from '../api/auth.api.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
   private user$ = new BehaviorSubject<any>(null)
+  public currentUser: Observable<User>
 
-  constructor(private http: HttpClient) {
+
+  constructor(
+    private http: HttpClient,
+    private authApi: AuthApiService
+  ) {
+      this.user$ = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')))
+      this.currentUser = this.user$.asObservable()
   }
 
-  login(username: string, password: string) {
-    return this.http.post<any>(`/users/authenticate`, { username, password })
-      .pipe(map(user => {
-        localStorage.setItem('currentUser', JSON.stringify(user))
-        this.user$.next(user)
-        return user
+  public get currentUserValue(): User {
+    return this.user$.value
+}
+
+  login(body) {
+    return this.authApi.login(body)
+      .pipe(map(res => {
+        storageUtils.set('token', res.token)
+        // this.user$.next(user)
+        return res
       }))
   }
 
   logout() {
-    localStorage.removeItem('token')
-    localStorage.removeItem('refreshToken')
+    storageUtils.clear()
     this.user$.next(null)
   }
 
@@ -65,8 +76,8 @@ export class AuthenticationService {
     return this.http.get<any>(`${environment.apiUrl}/current-user`)
       .pipe(
         tap(user => {
-          this.user$.next(user);
+          this.user$.next(user)
         })
-      );
+      )
   }
 }

@@ -21,16 +21,16 @@ export class UserApi extends BaseApi {
     return this.httpClient.get<User[]>(this.createUrl(`get-users?keyword=${keyword}`))
   }
 
-  createUser(body) {
-    return this.httpClient.post(this.createUrl('create'), body, { responseType: 'text' })
+  createUser(body, departmentId: string) {
+    return this.httpClient.post(this.createUrl(`create?departmentId=${departmentId}`), body, { responseType: 'text' })
   }
 
   getUser(userId): Observable<User> {
     return this.httpClient.get<User>(this.createUrl(`get-user?id=${userId}`))
   }
 
-  updateUser(body) {
-    return this.httpClient.put(this.createUrl('update'), body, { responseType: 'text' })
+  updateUser(body, departmentId: string) {
+    return this.httpClient.put(this.createUrl(`update?departmentId=${departmentId}`), body, { responseType: 'text' })
   }
 
   deleteUser(id) {

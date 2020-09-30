@@ -37,7 +37,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     CoreModule,
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptorService, multi: true },
     { provide: NZ_I18N, useValue: vi_VN }
   ],
   bootstrap: [AppComponent]

@@ -36,7 +36,8 @@ export class UserFormComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
       phone: [''],
-      department: ['']
+      department: [''],
+      status: ['inActive']
     })
     if (this.user) {
       this.form.patchValue(this.user)
@@ -58,11 +59,20 @@ export class UserFormComponent implements OnInit {
     if (this.form.invalid) {
       return
     }
-    let body = this.form.value
+    let body = {
+      birthDay: this.form.value.birthDay,
+      firstName: this.form.value.firstName,
+      gender: this.form.value.gender,
+      lastName: this.form.value.lastName,
+      password: this.form.value.password,
+      phone: this.form.value.phone,
+      username: this.form.value.username,
+      status: this.form.value.status
+    }
     this.activity.start('submitting')
     if (this.user) {
       body = Object.assign({}, body, { id: this.user.id, status: this.user.status })
-      this.userApi.updateUser(body).pipe(tap(() => {
+      this.userApi.updateUser(body, this.form.value.department).pipe(tap(() => {
       })).subscribe(() => {
         this.alert.success('Cập nhật người dùng thành công')
         this.activity.stop('submitting')
@@ -72,7 +82,7 @@ export class UserFormComponent implements OnInit {
         this.activity.stop('submitting')
       })
     } else {
-      this.userApi.createUser(body).subscribe(() => {
+      this.userApi.createUser(body, this.form.value.department).subscribe(() => {
         this.alert.success('Thêm mới người dùng thành công')
         this.activity.stop('submitting')
         this.destroyModal()

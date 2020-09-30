@@ -1,34 +1,22 @@
 <div class="container-login">
   <div class="wrap-login p-5">
-    <form class="login-form validate-form">
-      <span class="login-form-title pb-4">
-        Account Login
-      </span>
-      <div class="wrap-input validate-input">
-        <input class="input" type="text" placeholder="Email">
-        <span class="focus-input-1"></span>
-        <span class="focus-input-2"></span>
-      </div>
-      <div class="wrap-input rs1 validate-input ">
-        <input class="input" type="password" name="pass" placeholder="Password">
-        <span class="focus-input-1"></span>
-        <span class="focus-input-2"></span>
-      </div>
-      <div class="container-login-form-btn mt-4 mb-5">
-        <button class="login-form-btn" (click)="login()">Sign in</button>
-      </div>
-      <div class="text-center">
-        <span class="txt1">Forgot</span>
-        <a href="#" class="txt2 hov1">Username / Password?</a>
-      </div>
-      <div class="text-center">
-        <span class="txt1">
-          Create an account?
-        </span>
-        <a href="#" class="txt2 hov1" >
-          Sign up
-        </a>
-      </div>
+    <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+      <h5 class="text-center mb-5">Loggin</h5>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your username!">
+          <nz-input-group nzPrefixIcon="user">
+            <input type="text" nz-input formControlName="username" placeholder="Username" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+          <nz-input-group nzPrefixIcon="lock">
+            <input type="password" nz-input formControlName="password" placeholder="Password" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
     </form>
   </div>
 </div>

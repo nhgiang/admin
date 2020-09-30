@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd';
-import { switchMap } from 'rxjs/operators';
-import { DepartmentApi } from 'src/app/api/department.api';
-import { AlertService } from 'src/app/services/alert.service';
-import { Department } from 'src/types/model';
-import { DepartmentFormComponent } from './department-form/department-form.component';
+import { Component, OnInit } from '@angular/core'
+import { NzModalService } from 'ng-zorro-antd'
+import { switchMap } from 'rxjs/operators'
+import { DepartmentApi } from 'src/app/api/department.api'
+import { AlertService } from 'src/app/services/alert.service'
+import { Department } from 'src/types/model'
+import { DepartmentFormComponent } from './department-form/department-form.component'
 
 @Component({
   selector: 'app-department',
@@ -14,6 +14,8 @@ import { DepartmentFormComponent } from './department-form/department-form.compo
 export class DepartmentComponent implements OnInit {
   switchValue = false
   departments: Department[]
+  keyword: string
+  allDepartment: Department[]
   constructor(
     private modalService: NzModalService,
     private departmentApi: DepartmentApi,
@@ -60,7 +62,29 @@ export class DepartmentComponent implements OnInit {
 
   fetch() {
     this.departmentApi.getDepartments('').subscribe(departments => {
+      this.allDepartment = departments
       this.departments = departments
+    })
+  }
+
+  updateStatus(event, department) {
+    const body: Department = Object.assign({}, department, { status: event ? 'active' : 'inactive' })
+    this.departmentApi.updateDepartment(body).subscribe(() => {
+      this.alert.success('Cập nhật trạng thái phòng ban thành công')
+    }, () => {
+      this.alert.error('Cập nhật trạng thái phòng ban thất bại')
+    })
+  }
+
+  search() {
+    if (!this.keyword) {
+      this.departments = this.allDepartment
+      return
+    }
+    this.departments = this.allDepartment.filter(u => {
+      if (u.name.toLowerCase().includes(this.keyword)) {
+        return u
+      }
     })
   }
 }

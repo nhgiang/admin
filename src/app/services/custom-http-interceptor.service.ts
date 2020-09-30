@@ -25,11 +25,11 @@ export class CustomHttpInterceptorService implements HttpInterceptor {
         // in case of 401 http error
         if (err instanceof HttpErrorResponse && err.status === 401) {
           // get refresh tokens
-          const refreshToken = storageUtils.get('refreshToken')
-          // if there are tokens then send refresh token request
-          if (refreshToken && accessToken) {
-            return this.refreshToken(req, next)
-          }
+          // const refreshToken = storageUtils.get('refreshToken')
+          // // if there are tokens then send refresh token request
+          // if (refreshToken && accessToken) {
+          //   return this.refreshToken(req, next)
+          // }
           // otherwise logout and redirect to login page
           return this.logoutAndRedirect(err)
         }
@@ -53,7 +53,7 @@ export class CustomHttpInterceptorService implements HttpInterceptor {
 
   private logoutAndRedirect(err): Observable<HttpEvent<any>> {
     this.authenticationService.logout()
-    this.router.navigateByUrl('/login')
+    this.router.navigateByUrl('/auth')
 
     return throwError(err)
   }

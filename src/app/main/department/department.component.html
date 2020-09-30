@@ -2,8 +2,8 @@
   <h5 class="title mb-4">Danh sách phòng ban</h5>
   <div class="d-flex justify-content-between mb-2">
     <div class="search d-flex">
-      <input type="text" class="form-control search mr-3" placeholder="Nhập vào tên phòng ban">
-      <button class="btn btn-primary btn-search d-flex align-items-center">
+      <input type="text" class="form-control search mr-3" placeholder="Nhập vào tên phòng ban" [(ngModel)]="keyword">
+      <button class="btn btn-primary btn-search d-flex align-items-center" (click)="search()">
         <i nz-icon nzType="search" nzTheme="outline"></i>
       </button>
     </div>
@@ -25,7 +25,7 @@
         <td>{{index + 1}}</td>
         <td>{{item?.name}}</td>
         <td>
-          <nz-switch [ngModel]="item?.status === 'active'"></nz-switch>
+          <nz-switch [ngModel]="item?.status === 'active'" (ngModelChange)="updateStatus($event,item)"></nz-switch>
         </td>
         <td>
           <div class="actions">
